@@ -159,6 +159,6 @@ class SchoolController extends Controller
 
     public function getSubjectByClass($id){
         $data  = $this->class->getSubjectByClass($id);
-        dd($data);
+       // dd($data);
     }
 }
