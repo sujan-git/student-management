@@ -16,9 +16,12 @@ class CreateSubjectsTable extends Migration
         Schema::create('subjects', function (Blueprint $table) {
             $table->increments('id');
             $table->string('subject');
-            $table->boolean('status');
-            $table->decimal('full_marks',5,2);
-            $table->decimal('pass_marks',5,2);
+            $table->string('subject_code')->nullable();
+            $table->boolean('status')->default(1);
+            $table->decimal('full_marks_theory',5,2)->nullable();
+            $table->decimal('full_marks_practical',5,2)->nullable();
+            $table->decimal('pass_marks_theory',5,2)->nullable();
+            $table->decimal('pass_marks_practical',5,2)->nullable();
             $table->timestamps();
         });
     }
