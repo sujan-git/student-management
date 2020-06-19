@@ -158,7 +158,13 @@ class SchoolController extends Controller
 
 
     public function getSubjectByClass($id){
-        $data  = $this->class->getSubjectByClass($id);
-       // dd($data);
+        $data  = $this->class->getSubjects($id);
+        $students = $this->student->where('class_level',$id)->get();
+        if($data->count()>0){
+             return view('school.result')
+            ->with('students',$students)
+            ->with('subjects',$data)
+            ->with('title','Result Publish | Adminstrator');
+        }
     }
 }

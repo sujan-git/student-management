@@ -32,6 +32,11 @@ Route::group(['prefix'=>'admin'],function(){
 	Route::get('/view/{id}','School\SchoolController@viewStudentInfo')->name('student.delete');
 	Route::get('/studentinfo/{class_id}','School\SchoolController@getStudentByClass')->name('studentfetch.class');
 	Route::get('/class_subjectinfo/{id}','School\SchoolController@getSubjectByClass')->name('class.subject');
+
+	/*-------Result Routes-------*/
+	Route::post('/submit/result/','School\ResultController@addResultInfo')->name('result.add');
+	Route::get('/show/result/{id}','School\ResultController@getResult')->name('result.show');
+	/*-------Result Routes-------*/
 });
 
 ?>
