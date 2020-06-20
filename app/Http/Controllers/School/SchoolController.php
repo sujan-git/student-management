@@ -163,6 +163,7 @@ class SchoolController extends Controller
         if($data->count()>0){
              return view('school.result')
             ->with('students',$students)
+            ->with('class_id',$id)
             ->with('subjects',$data)
             ->with('title','Result Publish | Adminstrator');
         }

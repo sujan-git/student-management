@@ -36,6 +36,8 @@ Route::group(['prefix'=>'admin'],function(){
 	/*-------Result Routes-------*/
 	Route::post('/submit/result/','School\ResultController@addResultInfo')->name('result.add');
 	Route::get('/show/result/{id}','School\ResultController@getResult')->name('result.show');
+	Route::get('/print/result/','School\ResultController@result')->name('result');
+	Route::get('/print/result/{id}','School\ResultController@resultClass')->name('result.class');
 	/*-------Result Routes-------*/
 });
 

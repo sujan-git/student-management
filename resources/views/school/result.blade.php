@@ -55,7 +55,9 @@
                           <button type="button" class="close" data-dismiss="alert">×</button> 
                         <strong>{{ $message }}</strong>
                        </div>
+
                        @endif
+
                   <div class="x_content">
 	                  	<form class="form-horizontal form-label-left" enctype="multipart/form-data" method="post" action="{{route('result.add')}}">
 	                  		@csrf
@@ -63,14 +65,19 @@
 	                        					<label class="control-label col-md-3 col-sm-3 col-xs-12">Select Student Name</label>
 						                        <div class="col-md-9 col-sm-9 col-xs-12">
 						                          <select class="select2_single form-control" tabindex="-1" name="student">
-						                            <option value=''>--Select Student Name--</option>
+						                            <option value="">--Select Student Name--</option>
 						                            @if($students)
 						                            @foreach($students as $student)
 						                            <option value="{{$student->id}}">{{$student->student_name}}</option>
+						                   
 						                            @endforeach
 						                            @endif
 						                            
 						                          </select>
+						                          <input type="hidden" name="class_id" value="{{(isset($class_id))?$class_id:''}}">
+						                          @if(isset($errors) && $errors->has('student'))
+                              							<strong style="color:red">{{ $errors->first('student') }}</strong>
+                           		  					@endif
 						                        </div>
 	                      					</div>
 
@@ -91,14 +98,21 @@
 													</thead>
 													<tbody>
 														@if($subjects->subjects)
-														@foreach($subjects->subjects as $subject)
+														@foreach($subjects->subjects as $key=>$subject)
 														<tr class="even pointer">
 															
 															<td class="column-title">{{$subject->subject}}<input type="hidden" value="{{$subject->id}}" name="subject_id[]"</td>
 															<td class="column-title">{{$subject->full_marks_theory}}</td>
 															<td class="column-title">{{$subject->full_marks_practical}}</td>
-															<td class="column-title"><input type="number" name="theory_marks[]"></td>
-															<td class="column-title"><input type="number" name= "practical_marks[]" value="{{(@$subject->full_marks_practical == 0)?0:''}}" {{(@$subject->full_marks_practical == 0)?"readonly=readonly":''}}></td>
+															<td class="column-title"><input type="number" name="theory_marks[]">
+																@if(isset($errors) && $errors->has('theory_marks.'.$key))
+                              										<strong style="color:red">{{ $errors->first('theory_marks.'.$key) }}</strong>
+                           		  								@endif</td>
+															<td class="column-title"><input type="number" name= "practical_marks[]" value="{{(@$subject->full_marks_practical == 0)?0:''}}" {{(@$subject->full_marks_practical == 0)?"readonly=readonly":''}}>
+																 @if(isset($errors) && $errors->has('practical_marks.'.$key))
+                              										<strong style="color:red">{{ $errors->first('practical_marks.'.$key) }}</strong>
+                           		  								@endif
+															</td>
 															<td class="column-title"><input type="text" name="remark[]"></td>
 														
 														</tr>

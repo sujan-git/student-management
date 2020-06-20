@@ -309,49 +309,7 @@
 	                        		@endforeach
 	                        	@endif
 	                        	</div>
-	                        		<form class="form-horizontal form-label-left" enctype="multipart/form-data" method="post" action="">
-	                        			<div class="form-group">
-                        					<label class="control-label col-md-3 col-sm-3 col-xs-12">Select Student Name</label>
-					                        <div class="col-md-9 col-sm-9 col-xs-12">
-					                          <select class="select2_single form-control" tabindex="-1" name="student">
-					                            <option></option>
-					                            <option value="AK">Alaska</option>
-					                            
-					                          </select>
-					                        </div>
-                      					</div>
-
-                      					<div class="form-group">
-                      						<table class="table table-striped jambo_table ">
-												<thead>
-													<tr class="headings">
-														
-														<th class="column-title">Subject Name</th>
-														
-														<th class="column-title">Full Marks(Th)</th>
-														<th class="column-title">Full Marks(Pr)</th>
-														<th class="column-title">Obtained Marks(Th)</th>
-														<th class="column-title">Obtained Marks(Pr)</th>
-														<th class="column-title">Remark</th>
-													</th>
-													</tr>
-												</thead>
-												<tbody>
-													<tr class="even pointer">
-														
-														<td class="column-title">Sujan Poudel</td>
-														<td class="column-title">80</td>
-														<td class="column-title">20</td>
-														<td class="column-title"><input type="number"></td>
-														<td class="column-title"><input type="number"></td>
-														<td class="column-title"><input type="text"></td>
-													
-													</tr>
-												</tbody>
-												
-											</table>
-                      					</div>
-	                        		</form>
+	                        		
 	                        	
                         	
                           
