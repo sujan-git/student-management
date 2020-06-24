@@ -74,7 +74,9 @@
                               <tr class="headings">
                                 
                                 <th class="column-title">Student Name </th>
-                                <th class="column-title no-link last"><span class="nobr">Action</span>
+                                <th class="column-title no-link last"><span class="nobr">View</span>
+                                </th>
+                                <th class="column-title"><span class="nobr">Edit</span>
                                 </th>
                               
                               </tr>
@@ -148,8 +150,10 @@
               var url_view = "{{url('/')}}"+"/admin/view/"+student.id;
               html += "<td ><a href='"+url_view+"'>"+student.student_name+"</a></td>";
               var url_result = "{{url('/')}}"+"/admin/print/result/"+student.id;
+               var url_result_edit = "{{url('/')}}"+"/admin/edit/result/"+student.id;
               
               html += "<td><a href='"+url_result+"' class='btn btn-info'><i class=glyphicon glyphicon-random'></i>See Result</a></td>";
+              html += "<td><a href='"+url_result_edit+"' class='btn btn-info'><i class=glyphicon glyphicon-random'></i>Edit Result</a></td>";
             });
             $('#student_data').append(html);
           }

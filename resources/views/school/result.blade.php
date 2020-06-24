@@ -59,8 +59,14 @@
                        @endif
 
                   <div class="x_content">
-	                  	<form class="form-horizontal form-label-left" enctype="multipart/form-data" method="post" action="{{route('result.add')}}">
+                  	@if($stdnt)
+	                  	<form class="form-horizontal form-label-left" enctype="multipart/form-data" method="post" action="{{route('result.update',$stdnt->id)}}">
 	                  		@csrf
+	                  		@else
+	                  		<form class="form-horizontal form-label-left" enctype="multipart/form-data" method="post" action="{{route('result.add')}}">
+	                  			@csrf
+	                  		@endif
+	                  		
 		                        			<div class="form-group">
 	                        					<label class="control-label col-md-3 col-sm-3 col-xs-12">Select Student Name</label>
 						                        <div class="col-md-9 col-sm-9 col-xs-12">
@@ -68,7 +74,7 @@
 						                            <option value="">--Select Student Name--</option>
 						                            @if($students)
 						                            @foreach($students as $student)
-						                            <option value="{{$student->id}}">{{$student->student_name}}</option>
+						                            <option value="{{$student->id}}" {{($student->id == @$stdnt->id)?'selected':''}}>{{$student->student_name}}</option>
 						                   
 						                            @endforeach
 						                            @endif
@@ -92,7 +98,7 @@
 															<th class="column-title">Full Marks(Pr)</th>
 															<th class="column-title">Obtained Marks(Th)</th>
 															<th class="column-title">Obtained Marks(Pr)</th>
-															<th class="column-title">Remark</th>
+															
 														</th>
 														</tr>
 													</thead>
@@ -104,16 +110,16 @@
 															<td class="column-title">{{$subject->subject}}<input type="hidden" value="{{$subject->id}}" name="subject_id[]"</td>
 															<td class="column-title">{{$subject->full_marks_theory}}</td>
 															<td class="column-title">{{$subject->full_marks_practical}}</td>
-															<td class="column-title"><input type="number" name="theory_marks[]">
+															<td class="column-title"><input type="number" name="theory_marks[]" value = "{{@$result->theory_marks[$key]}}">
 																@if(isset($errors) && $errors->has('theory_marks.'.$key))
                               										<strong style="color:red">{{ $errors->first('theory_marks.'.$key) }}</strong>
                            		  								@endif</td>
-															<td class="column-title"><input type="number" name= "practical_marks[]" value="{{(@$subject->full_marks_practical == 0)?0:''}}" {{(@$subject->full_marks_practical == 0)?"readonly=readonly":''}}>
+															<td class="column-title"><input type="number" name= "practical_marks[]" value="{{(@$subject->full_marks_practical == 0)?0:@$result->practical_marks[$key]}}" {{(@$subject->full_marks_practical == 0)?"readonly=readonly":''}}>
 																 @if(isset($errors) && $errors->has('practical_marks.'.$key))
                               										<strong style="color:red">{{ $errors->first('practical_marks.'.$key) }}</strong>
                            		  								@endif
 															</td>
-															<td class="column-title"><input type="text" name="remark[]"></td>
+															
 														
 														</tr>
 														@endforeach

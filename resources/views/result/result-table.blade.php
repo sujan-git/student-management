@@ -25,7 +25,6 @@
             </div>
 
             <div class="clearfix"></div>
-
             <div class="">
               <div class="col-md-12 col-sm-6 col-xs-12">
                 <div class="x_panel">
@@ -49,7 +48,9 @@
                     <div class="clearfix"></div>
                   </div>
                   <div class="x_content">
-                  	<h2 class="center">School Name</h2>
+                    <a target= "_ "href="{{route('result.pdf',$student->id)}}" class="btn btn-info">Generate PDF</a>
+                    <a href="{{route('result.edit',$student->id)}}" class="btn btn-info">Generate PDF</a>
+              <h2 class="center">School Name</h2>
       		 		<h3 class="center">Result Title</h3>
       		 		<h5>Student Name: {{$student->student_name}}</h5>
       		 		<h5>{{$data->name}}</h5>
@@ -58,39 +59,83 @@
       		 		<table class="table table-bordered">
 						  <thead>
 						    <tr>
-						      <th scope="col">#</th>
+						      
 						      <th scope="col">Subject Name</th>
 						      <th scope="col">Full Marks(Th)</th>
 						      <th scope="col">Full Marks(Pr)</th>
 						      @if($result)
-						      @php
-						      @endphp
+						      
 						      <th scope="col">Obtained Marks(Th)</th>
 						      <th scope="col">Obtained Marks(Pr)</th>
 						      @endif
+                  <th scope="col">Status</th>
 						    </tr>
 						  </thead>
+               @php
+                $theory_marks = array();$practical_marks = array();$total_marks = 0;$percent = 0;$full_marks = 0;$final_result=true;
+                @endphp
 						  <tbody>
 						  	@if($data->subjects)
-						  	@foreach($data->subjects as $subject)
+						  	@foreach($data->subjects as $key=>$subject)
+                @if($result->subject_ids)
+                @php
+                for($i=0; $i<count($result->subject_ids);$i++){
+                    if($subject->id == $result->subject_ids[$i]){
+                     $theory_marks[] = $result->theory_marks[$i];
+                     $practical_marks[] = $result->practical_marks[$i];
+                  }
+                }
+                @endphp
+                @endif
+               
 						    <tr>
-						      <th scope="row">1</th>
+						      
 						      <td>{{$subject->subject}}</td>
 						      <td>{{$subject->full_marks_theory}}</td>
 						      <td>{{$subject->full_marks_practical}}</td>
-						      <td>@mdo</td>
-						      <td>@mdo</td>
+						      <td>{{$theory_marks[$key]}}</td>
+						      <td>{{$practical_marks[$key]}}</td>
+                  <td>
+                   @php
+                    $status = array();
+                    @endphp
+                    @if($practical_marks[$key] >= $subject->pass_marks_practical && $theory_marks[$key] >= $subject->pass_marks_theory)
+                      @php
+                      $status[$key]= 'PASS';
+                      if($final_result){
+                        $final_result= true;
+                      }
+                      @endphp
+                    @else
+                     @php
+                      $status[$key]= 'FAIL';
+                      if($final_result){
+                        $final_result= false;
+                      }
+                      @endphp
+                    @endif
+                   {{$status[$key]}}
+                  </td>
+                  @php
+                  $total_marks += $theory_marks[$key] + $practical_marks[$key];
+                  $full_marks += $subject->full_marks_practical + $subject->full_marks_theory;
+                  @endphp
 
 						    </tr>
 						    @endforeach
 						    @endif
-						    
-						    
 						  </tbody>
 					</table>
-					<h5>Total Marks</h5>
-					<h5>Percent</h5>
-      		 		<h5>Status:Pass/Fail</h5>
+          <h5>Full Marks: {{$full_marks}}</h5>
+					<h5>Total Marks Obtained: {{$total_marks}}</h5>
+         
+          @if($final_result)
+					<h5>Percent:{{number_format(($total_marks*100)/$full_marks,2).'%'}}</h5>
+          @else
+          <h5>Percent:</h5>
+          @endif
+          <h5>Status:{{($final_result)?'PASS':'FAIL'}}</h5>
+      		 		
       		 		<h5>Remarks:</h5>
                   </div>
               </div>
